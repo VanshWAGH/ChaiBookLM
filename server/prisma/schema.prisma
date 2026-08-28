@@ -1,0 +1,135 @@
+generator client {
+  provider        = "prisma-client"
+  output          = "../src/generated/prisma"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  extensions = [vector]
+}
+
+model Workspace {
+  id            String         @id @default(uuid())
+  title         String
+  description   String?
+  icon          String?
+  defaultModel  String         @default("google/gemma-4-26b-a4b-it:free")
+  userId        String
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  sources       Source[]
+  conversations Conversation[]
+  artifacts     Artifact[]
+
+  @@index([userId])
+  @@map("workspace")
+}
+
+model Source {
+  id          String        @id @default(uuid())
+  workspaceId String
+  type        SourceType
+  title       String
+  content     String?
+  url         String?
+  status      SourceStatus  @default(PENDING)
+  metadata    Json?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  workspace   Workspace     @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  chunks      SourceChunk[]
+
+  @@index([workspaceId])
+  @@map("source")
+}
+
+model SourceChunk {
+  id          String                @id @default(uuid())
+  sourceId    String
+  workspaceId String
+  content     String
+  chunkIndex  Int
+  embedding   Unsupported("vector")?
+  metadata    Json?
+  createdAt   DateTime              @default(now())
+  source      Source                @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+
+  @@index([sourceId])
+  @@index([workspaceId])
+  @@map("source_chunk")
+}
+
+model Conversation {
+  id          String    @id @default(uuid())
+  workspaceId String
+  title       String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  messages    Message[]
+
+  @@index([workspaceId])
+  @@map("conversation")
+}
+
+model Message {
+  id             String       @id @default(uuid())
+  conversationId String
+  role           MessageRole
+  content        String
+  citations      Json?
+  createdAt      DateTime     @default(now())
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId])
+  @@map("message")
+}
+
+model Artifact {
+  id          String         @id @default(uuid())
+  workspaceId String
+  type        ArtifactType
+  title       String
+  content     String         @default("")
+  status      ArtifactStatus @default(GENERATING)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  workspace   Workspace      @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([workspaceId])
+  @@map("artifact")
+}
+
+enum SourceType {
+  PDF
+  WEBSITE
+  YOUTUBE
+  TEXT
+  MARKDOWN
+}
+
+enum SourceStatus {
+  PENDING
+  PROCESSING
+  READY
+  FAILED
+}
+
+enum MessageRole {
+  USER
+  ASSISTANT
+}
+
+enum ArtifactType {
+  STUDY_GUIDE
+  FAQ
+  BRIEFING
+  TIMELINE
+}
+
+enum ArtifactStatus {
+  GENERATING
+  READY
+  FAILED
+}

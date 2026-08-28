@@ -1,0 +1,48 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: notebooklm-postgres
+    environment:
+      POSTGRES_DB: chaibook
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5434:5432"
+    volumes:
+      - chaibook_pg_data:/var/lib/postgresql/data
+      - ./docker/postgres/init-extensions.sql:/docker-entrypoint-initdb.d/01-extensions.sql:ro
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d chaibook" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  server:
+    build: ./server
+    container_name: notebooklm-server
+    env_file:
+      - ./server/.env
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/chaibook
+      - PORT=8081
+      - CLIENT_URL=http://localhost:3000
+    ports:
+      - "8081:8081"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  client:
+    build: ./client
+    container_name: notebooklm-client
+    env_file:
+      - ./client/.env.local
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8081
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server
+
+volumes:
+  chaibook_pg_data:
