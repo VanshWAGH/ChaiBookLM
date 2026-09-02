@@ -15,20 +15,20 @@ const ARTIFACT_PROMPTS: Record<
     (context: string) => string
 > = {
     STUDY_GUIDE: (context) =>
-        `Create a detailed study guide from these sources. Use markdown with clear sections, key concepts, definitions, and review questions.\n\nSources:\n${context}`,
+        `Perform a comprehensive Risk Audit on these legal documents. Identify all potential legal risks, unfavorable clauses, missing protections, and liability concerns. For each risk, explain the issue in plain English, rate its severity (High/Medium/Low), and suggest a remediation. Use markdown with clear sections.\n\nDocuments:\n${context}`,
     FAQ: (context) =>
-        `Create a FAQ document with 10-15 question and answer pairs based on these sources. Use markdown.\n\nSources:\n${context}`,
+        `Extract and explain the 10-15 most important clauses from these legal documents. For each clause, provide the original text, a plain-English explanation, and note if it is standard or unusual. Use markdown.\n\nDocuments:\n${context}`,
     BRIEFING: (context) =>
-        `Write an executive briefing document summarizing the key points, insights, and recommendations from these sources. Use markdown.\n\nSources:\n${context}`,
+        `Write a Legal Brief summarizing these documents for a startup founder. Include: parties involved, key obligations, important dates/deadlines, financial terms, termination conditions, and any non-standard provisions. Use markdown.\n\nDocuments:\n${context}`,
     TIMELINE: (context) =>
-        `Extract a chronological timeline of events from these sources. Use markdown with dates and descriptions.\n\nSources:\n${context}`,
+        `Create a Compliance Checklist based on these legal documents. List all obligations, deadlines, filing requirements, and compliance items that the parties must fulfill. Include references to relevant Indian laws (Companies Act 2013, FEMA, etc.) where applicable. Use markdown with checkboxes.\n\nDocuments:\n${context}`,
 };
 
 const ARTIFACT_TITLES: Record<ArtifactType, string> = {
-    STUDY_GUIDE: "Study Guide",
-    FAQ: "FAQ",
-    BRIEFING: "Briefing Document",
-    TIMELINE: "Timeline",
+    STUDY_GUIDE: "Risk Audit",
+    FAQ: "Key Clauses Analysis",
+    BRIEFING: "Legal Brief",
+    TIMELINE: "Compliance Checklist",
 };
 
 async function getWorkspaceContext(workspaceId: string) {
@@ -39,7 +39,7 @@ async function getWorkspaceContext(workspaceId: string) {
 
     if (sources.length === 0) {
         throw new NotFoundError(
-            "No ready sources found. Add and process sources first.",
+            "No ready documents found. Upload and process legal documents first.",
         );
     }
 
@@ -93,7 +93,7 @@ export async function generateArtifact(
                 {
                     role: "system",
                     content:
-                        "You generate well-structured markdown documents from research sources.",
+                        "You are an expert legal analyst specializing in Indian corporate law. Generate well-structured markdown documents analyzing legal contracts and agreements. Always include a disclaimer that this is AI-assisted analysis and not professional legal advice.",
                 },
                 { role: "user", content: prompt },
             ],

@@ -99,6 +99,7 @@ export async function sendMessage(req: Request, res: Response) {
         res.write("event: end\ndata: {}\n\n");
         res.end();
     } catch (error) {
+        console.error("Chat streaming error:", error);
         const message =
             error instanceof Error ? error.message : "Chat failed";
         res.write(

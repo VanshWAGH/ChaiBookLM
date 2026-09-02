@@ -42,21 +42,41 @@ export async function chatComplete(
     return response.choices[0]?.message?.content ?? "";
 }
 
+async function sleep(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export async function* chatStream(
     messages: ChatMessage[],
     model = DEFAULT_CHAT_MODEL,
+    maxRetries = 3,
 ) {
     const client = getClient();
-    const stream = await client.chat.completions.create({
-        model,
-        messages,
-        stream: true,
-    });
 
-    for await (const chunk of stream) {
-        const text = chunk.choices[0]?.delta?.content;
-        if (text) {
-            yield text;
+    for (let attempt = 0; attempt <= maxRetries; attempt++) {
+        try {
+            const stream = await client.chat.completions.create({
+                model,
+                messages,
+                stream: true,
+            });
+
+            for await (const chunk of stream) {
+                const text = chunk.choices[0]?.delta?.content;
+                if (text) {
+                    yield text;
+                }
+            }
+            return; // success, exit
+        } catch (error: any) {
+            const isRateLimit = error?.status === 429;
+            if (isRateLimit && attempt < maxRetries) {
+                const delay = Math.pow(2, attempt) * 1000 + Math.random() * 500;
+                console.log(`Rate limited (attempt ${attempt + 1}/${maxRetries}), retrying in ${Math.round(delay)}ms...`);
+                await sleep(delay);
+                continue;
+            }
+            throw error;
         }
     }
 }
