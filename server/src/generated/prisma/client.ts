@@ -71,3 +71,8 @@ export type Message = Prisma.MessageModel
  * 
  */
 export type Artifact = Prisma.ArtifactModel
+/**
+ * Model Note
+ * 
+ */
+export type Note = Prisma.NoteModel

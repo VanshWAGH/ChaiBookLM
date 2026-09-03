@@ -21,6 +21,7 @@ model Workspace {
   sources       Source[]
   conversations Conversation[]
   artifacts     Artifact[]
+  notes         Note[]
 
   @@index([userId])
   @@map("workspace")
@@ -101,6 +102,20 @@ model Artifact {
   @@map("artifact")
 }
 
+model Note {
+  id          String    @id @default(uuid())
+  workspaceId String
+  title       String
+  content     String    @default("")
+  isPinned    Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([workspaceId])
+  @@map("note")
+}
+
 enum SourceType {
   PDF
   WEBSITE
@@ -126,6 +141,8 @@ enum ArtifactType {
   FAQ
   BRIEFING
   TIMELINE
+  SUMMARY
+  CLAUSE_EXTRACTOR
 }
 
 enum ArtifactStatus {

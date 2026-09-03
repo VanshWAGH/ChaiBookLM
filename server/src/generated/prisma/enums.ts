@@ -42,7 +42,9 @@ export const ArtifactType = {
   STUDY_GUIDE: 'STUDY_GUIDE',
   FAQ: 'FAQ',
   BRIEFING: 'BRIEFING',
-  TIMELINE: 'TIMELINE'
+  TIMELINE: 'TIMELINE',
+  SUMMARY: 'SUMMARY',
+  CLAUSE_EXTRACTOR: 'CLAUSE_EXTRACTOR'
 } as const
 
 export type ArtifactType = (typeof ArtifactType)[keyof typeof ArtifactType]

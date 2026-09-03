@@ -22,6 +22,10 @@ const ARTIFACT_PROMPTS: Record<
         `Write a Legal Brief summarizing these documents for a startup founder. Include: parties involved, key obligations, important dates/deadlines, financial terms, termination conditions, and any non-standard provisions. Use markdown.\n\nDocuments:\n${context}`,
     TIMELINE: (context) =>
         `Create a Compliance Checklist based on these legal documents. List all obligations, deadlines, filing requirements, and compliance items that the parties must fulfill. Include references to relevant Indian laws (Companies Act 2013, FEMA, etc.) where applicable. Use markdown with checkboxes.\n\nDocuments:\n${context}`,
+    SUMMARY: (context) =>
+        `Write a comprehensive Executive Summary of these documents. Highlight the main purpose, key terms, duration, and critical financial or operational obligations. Keep it concise but detailed enough for a high-level review. Use markdown.\n\nDocuments:\n${context}`,
+    CLAUSE_EXTRACTOR: (context) =>
+        `Extract and analyze all clauses related to Termination, Liability, Indemnification, and Dispute Resolution from these documents. Quote the exact language, then explain what it means in plain English and flag any unusual risks. Use markdown.\n\nDocuments:\n${context}`,
 };
 
 const ARTIFACT_TITLES: Record<ArtifactType, string> = {
@@ -29,6 +33,8 @@ const ARTIFACT_TITLES: Record<ArtifactType, string> = {
     FAQ: "Key Clauses Analysis",
     BRIEFING: "Legal Brief",
     TIMELINE: "Compliance Checklist",
+    SUMMARY: "Document Summary",
+    CLAUSE_EXTRACTOR: "Clause Extractor",
 };
 
 async function getWorkspaceContext(workspaceId: string) {

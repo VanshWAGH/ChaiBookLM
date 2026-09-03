@@ -82,3 +82,11 @@ export async function generateBriefing(req: Request, res: Response) {
 export async function generateTimeline(req: Request, res: Response) {
     await handleGenerate(req, res, "TIMELINE");
 }
+
+export async function generateSummary(req: Request, res: Response) {
+    await handleGenerate(req, res, "SUMMARY");
+}
+
+export async function generateClauseExtractor(req: Request, res: Response) {
+    await handleGenerate(req, res, "CLAUSE_EXTRACTOR");
+}

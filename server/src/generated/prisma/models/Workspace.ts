@@ -209,6 +209,7 @@ export type WorkspaceWhereInput = {
   sources?: Prisma.SourceListRelationFilter
   conversations?: Prisma.ConversationListRelationFilter
   artifacts?: Prisma.ArtifactListRelationFilter
+  notes?: Prisma.NoteListRelationFilter
 }
 
 export type WorkspaceOrderByWithRelationInput = {
@@ -223,6 +224,7 @@ export type WorkspaceOrderByWithRelationInput = {
   sources?: Prisma.SourceOrderByRelationAggregateInput
   conversations?: Prisma.ConversationOrderByRelationAggregateInput
   artifacts?: Prisma.ArtifactOrderByRelationAggregateInput
+  notes?: Prisma.NoteOrderByRelationAggregateInput
 }
 
 export type WorkspaceWhereUniqueInput = Prisma.AtLeast<{
@@ -240,6 +242,7 @@ export type WorkspaceWhereUniqueInput = Prisma.AtLeast<{
   sources?: Prisma.SourceListRelationFilter
   conversations?: Prisma.ConversationListRelationFilter
   artifacts?: Prisma.ArtifactListRelationFilter
+  notes?: Prisma.NoteListRelationFilter
 }, "id">
 
 export type WorkspaceOrderByWithAggregationInput = {
@@ -282,6 +285,7 @@ export type WorkspaceCreateInput = {
   sources?: Prisma.SourceCreateNestedManyWithoutWorkspaceInput
   conversations?: Prisma.ConversationCreateNestedManyWithoutWorkspaceInput
   artifacts?: Prisma.ArtifactCreateNestedManyWithoutWorkspaceInput
+  notes?: Prisma.NoteCreateNestedManyWithoutWorkspaceInput
 }
 
 export type WorkspaceUncheckedCreateInput = {
@@ -296,6 +300,7 @@ export type WorkspaceUncheckedCreateInput = {
   sources?: Prisma.SourceUncheckedCreateNestedManyWithoutWorkspaceInput
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutWorkspaceInput
   artifacts?: Prisma.ArtifactUncheckedCreateNestedManyWithoutWorkspaceInput
+  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutWorkspaceInput
 }
 
 export type WorkspaceUpdateInput = {
@@ -310,6 +315,7 @@ export type WorkspaceUpdateInput = {
   sources?: Prisma.SourceUpdateManyWithoutWorkspaceNestedInput
   conversations?: Prisma.ConversationUpdateManyWithoutWorkspaceNestedInput
   artifacts?: Prisma.ArtifactUpdateManyWithoutWorkspaceNestedInput
+  notes?: Prisma.NoteUpdateManyWithoutWorkspaceNestedInput
 }
 
 export type WorkspaceUncheckedUpdateInput = {
@@ -324,6 +330,7 @@ export type WorkspaceUncheckedUpdateInput = {
   sources?: Prisma.SourceUncheckedUpdateManyWithoutWorkspaceNestedInput
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutWorkspaceNestedInput
   artifacts?: Prisma.ArtifactUncheckedUpdateManyWithoutWorkspaceNestedInput
+  notes?: Prisma.NoteUncheckedUpdateManyWithoutWorkspaceNestedInput
 }
 
 export type WorkspaceCreateManyInput = {
@@ -451,6 +458,20 @@ export type WorkspaceUpdateOneRequiredWithoutArtifactsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.WorkspaceUpdateToOneWithWhereWithoutArtifactsInput, Prisma.WorkspaceUpdateWithoutArtifactsInput>, Prisma.WorkspaceUncheckedUpdateWithoutArtifactsInput>
 }
 
+export type WorkspaceCreateNestedOneWithoutNotesInput = {
+  create?: Prisma.XOR<Prisma.WorkspaceCreateWithoutNotesInput, Prisma.WorkspaceUncheckedCreateWithoutNotesInput>
+  connectOrCreate?: Prisma.WorkspaceCreateOrConnectWithoutNotesInput
+  connect?: Prisma.WorkspaceWhereUniqueInput
+}
+
+export type WorkspaceUpdateOneRequiredWithoutNotesNestedInput = {
+  create?: Prisma.XOR<Prisma.WorkspaceCreateWithoutNotesInput, Prisma.WorkspaceUncheckedCreateWithoutNotesInput>
+  connectOrCreate?: Prisma.WorkspaceCreateOrConnectWithoutNotesInput
+  upsert?: Prisma.WorkspaceUpsertWithoutNotesInput
+  connect?: Prisma.WorkspaceWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.WorkspaceUpdateToOneWithWhereWithoutNotesInput, Prisma.WorkspaceUpdateWithoutNotesInput>, Prisma.WorkspaceUncheckedUpdateWithoutNotesInput>
+}
+
 export type WorkspaceCreateWithoutSourcesInput = {
   id?: string
   title: string
@@ -462,6 +483,7 @@ export type WorkspaceCreateWithoutSourcesInput = {
   updatedAt?: Date | string
   conversations?: Prisma.ConversationCreateNestedManyWithoutWorkspaceInput
   artifacts?: Prisma.ArtifactCreateNestedManyWithoutWorkspaceInput
+  notes?: Prisma.NoteCreateNestedManyWithoutWorkspaceInput
 }
 
 export type WorkspaceUncheckedCreateWithoutSourcesInput = {
@@ -475,6 +497,7 @@ export type WorkspaceUncheckedCreateWithoutSourcesInput = {
   updatedAt?: Date | string
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutWorkspaceInput
   artifacts?: Prisma.ArtifactUncheckedCreateNestedManyWithoutWorkspaceInput
+  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutWorkspaceInput
 }
 
 export type WorkspaceCreateOrConnectWithoutSourcesInput = {
@@ -504,6 +527,7 @@ export type WorkspaceUpdateWithoutSourcesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   conversations?: Prisma.ConversationUpdateManyWithoutWorkspaceNestedInput
   artifacts?: Prisma.ArtifactUpdateManyWithoutWorkspaceNestedInput
+  notes?: Prisma.NoteUpdateManyWithoutWorkspaceNestedInput
 }
 
 export type WorkspaceUncheckedUpdateWithoutSourcesInput = {
@@ -517,6 +541,7 @@ export type WorkspaceUncheckedUpdateWithoutSourcesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutWorkspaceNestedInput
   artifacts?: Prisma.ArtifactUncheckedUpdateManyWithoutWorkspaceNestedInput
+  notes?: Prisma.NoteUncheckedUpdateManyWithoutWorkspaceNestedInput
 }
 
 export type WorkspaceCreateWithoutConversationsInput = {
@@ -530,6 +555,7 @@ export type WorkspaceCreateWithoutConversationsInput = {
   updatedAt?: Date | string
   sources?: Prisma.SourceCreateNestedManyWithoutWorkspaceInput
   artifacts?: Prisma.ArtifactCreateNestedManyWithoutWorkspaceInput
+  notes?: Prisma.NoteCreateNestedManyWithoutWorkspaceInput
 }
 
 export type WorkspaceUncheckedCreateWithoutConversationsInput = {
@@ -543,6 +569,7 @@ export type WorkspaceUncheckedCreateWithoutConversationsInput = {
   updatedAt?: Date | string
   sources?: Prisma.SourceUncheckedCreateNestedManyWithoutWorkspaceInput
   artifacts?: Prisma.ArtifactUncheckedCreateNestedManyWithoutWorkspaceInput
+  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutWorkspaceInput
 }
 
 export type WorkspaceCreateOrConnectWithoutConversationsInput = {
@@ -572,6 +599,7 @@ export type WorkspaceUpdateWithoutConversationsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sources?: Prisma.SourceUpdateManyWithoutWorkspaceNestedInput
   artifacts?: Prisma.ArtifactUpdateManyWithoutWorkspaceNestedInput
+  notes?: Prisma.NoteUpdateManyWithoutWorkspaceNestedInput
 }
 
 export type WorkspaceUncheckedUpdateWithoutConversationsInput = {
@@ -585,6 +613,7 @@ export type WorkspaceUncheckedUpdateWithoutConversationsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sources?: Prisma.SourceUncheckedUpdateManyWithoutWorkspaceNestedInput
   artifacts?: Prisma.ArtifactUncheckedUpdateManyWithoutWorkspaceNestedInput
+  notes?: Prisma.NoteUncheckedUpdateManyWithoutWorkspaceNestedInput
 }
 
 export type WorkspaceCreateWithoutArtifactsInput = {
@@ -598,6 +627,7 @@ export type WorkspaceCreateWithoutArtifactsInput = {
   updatedAt?: Date | string
   sources?: Prisma.SourceCreateNestedManyWithoutWorkspaceInput
   conversations?: Prisma.ConversationCreateNestedManyWithoutWorkspaceInput
+  notes?: Prisma.NoteCreateNestedManyWithoutWorkspaceInput
 }
 
 export type WorkspaceUncheckedCreateWithoutArtifactsInput = {
@@ -611,6 +641,7 @@ export type WorkspaceUncheckedCreateWithoutArtifactsInput = {
   updatedAt?: Date | string
   sources?: Prisma.SourceUncheckedCreateNestedManyWithoutWorkspaceInput
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutWorkspaceInput
+  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutWorkspaceInput
 }
 
 export type WorkspaceCreateOrConnectWithoutArtifactsInput = {
@@ -640,6 +671,7 @@ export type WorkspaceUpdateWithoutArtifactsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sources?: Prisma.SourceUpdateManyWithoutWorkspaceNestedInput
   conversations?: Prisma.ConversationUpdateManyWithoutWorkspaceNestedInput
+  notes?: Prisma.NoteUpdateManyWithoutWorkspaceNestedInput
 }
 
 export type WorkspaceUncheckedUpdateWithoutArtifactsInput = {
@@ -653,6 +685,79 @@ export type WorkspaceUncheckedUpdateWithoutArtifactsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sources?: Prisma.SourceUncheckedUpdateManyWithoutWorkspaceNestedInput
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutWorkspaceNestedInput
+  notes?: Prisma.NoteUncheckedUpdateManyWithoutWorkspaceNestedInput
+}
+
+export type WorkspaceCreateWithoutNotesInput = {
+  id?: string
+  title: string
+  description?: string | null
+  icon?: string | null
+  defaultModel?: string
+  userId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sources?: Prisma.SourceCreateNestedManyWithoutWorkspaceInput
+  conversations?: Prisma.ConversationCreateNestedManyWithoutWorkspaceInput
+  artifacts?: Prisma.ArtifactCreateNestedManyWithoutWorkspaceInput
+}
+
+export type WorkspaceUncheckedCreateWithoutNotesInput = {
+  id?: string
+  title: string
+  description?: string | null
+  icon?: string | null
+  defaultModel?: string
+  userId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sources?: Prisma.SourceUncheckedCreateNestedManyWithoutWorkspaceInput
+  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutWorkspaceInput
+  artifacts?: Prisma.ArtifactUncheckedCreateNestedManyWithoutWorkspaceInput
+}
+
+export type WorkspaceCreateOrConnectWithoutNotesInput = {
+  where: Prisma.WorkspaceWhereUniqueInput
+  create: Prisma.XOR<Prisma.WorkspaceCreateWithoutNotesInput, Prisma.WorkspaceUncheckedCreateWithoutNotesInput>
+}
+
+export type WorkspaceUpsertWithoutNotesInput = {
+  update: Prisma.XOR<Prisma.WorkspaceUpdateWithoutNotesInput, Prisma.WorkspaceUncheckedUpdateWithoutNotesInput>
+  create: Prisma.XOR<Prisma.WorkspaceCreateWithoutNotesInput, Prisma.WorkspaceUncheckedCreateWithoutNotesInput>
+  where?: Prisma.WorkspaceWhereInput
+}
+
+export type WorkspaceUpdateToOneWithWhereWithoutNotesInput = {
+  where?: Prisma.WorkspaceWhereInput
+  data: Prisma.XOR<Prisma.WorkspaceUpdateWithoutNotesInput, Prisma.WorkspaceUncheckedUpdateWithoutNotesInput>
+}
+
+export type WorkspaceUpdateWithoutNotesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  defaultModel?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sources?: Prisma.SourceUpdateManyWithoutWorkspaceNestedInput
+  conversations?: Prisma.ConversationUpdateManyWithoutWorkspaceNestedInput
+  artifacts?: Prisma.ArtifactUpdateManyWithoutWorkspaceNestedInput
+}
+
+export type WorkspaceUncheckedUpdateWithoutNotesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  defaultModel?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sources?: Prisma.SourceUncheckedUpdateManyWithoutWorkspaceNestedInput
+  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutWorkspaceNestedInput
+  artifacts?: Prisma.ArtifactUncheckedUpdateManyWithoutWorkspaceNestedInput
 }
 
 
@@ -664,12 +769,14 @@ export type WorkspaceCountOutputType = {
   sources: number
   conversations: number
   artifacts: number
+  notes: number
 }
 
 export type WorkspaceCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sources?: boolean | WorkspaceCountOutputTypeCountSourcesArgs
   conversations?: boolean | WorkspaceCountOutputTypeCountConversationsArgs
   artifacts?: boolean | WorkspaceCountOutputTypeCountArtifactsArgs
+  notes?: boolean | WorkspaceCountOutputTypeCountNotesArgs
 }
 
 /**
@@ -703,6 +810,13 @@ export type WorkspaceCountOutputTypeCountArtifactsArgs<ExtArgs extends runtime.T
   where?: Prisma.ArtifactWhereInput
 }
 
+/**
+ * WorkspaceCountOutputType without action
+ */
+export type WorkspaceCountOutputTypeCountNotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NoteWhereInput
+}
+
 
 export type WorkspaceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -716,6 +830,7 @@ export type WorkspaceSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   sources?: boolean | Prisma.Workspace$sourcesArgs<ExtArgs>
   conversations?: boolean | Prisma.Workspace$conversationsArgs<ExtArgs>
   artifacts?: boolean | Prisma.Workspace$artifactsArgs<ExtArgs>
+  notes?: boolean | Prisma.Workspace$notesArgs<ExtArgs>
   _count?: boolean | Prisma.WorkspaceCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["workspace"]>
 
@@ -757,6 +872,7 @@ export type WorkspaceInclude<ExtArgs extends runtime.Types.Extensions.InternalAr
   sources?: boolean | Prisma.Workspace$sourcesArgs<ExtArgs>
   conversations?: boolean | Prisma.Workspace$conversationsArgs<ExtArgs>
   artifacts?: boolean | Prisma.Workspace$artifactsArgs<ExtArgs>
+  notes?: boolean | Prisma.Workspace$notesArgs<ExtArgs>
   _count?: boolean | Prisma.WorkspaceCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type WorkspaceIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -768,6 +884,7 @@ export type $WorkspacePayload<ExtArgs extends runtime.Types.Extensions.InternalA
     sources: Prisma.$SourcePayload<ExtArgs>[]
     conversations: Prisma.$ConversationPayload<ExtArgs>[]
     artifacts: Prisma.$ArtifactPayload<ExtArgs>[]
+    notes: Prisma.$NotePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1175,6 +1292,7 @@ export interface Prisma__WorkspaceClient<T, Null = never, ExtArgs extends runtim
   sources<T extends Prisma.Workspace$sourcesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Workspace$sourcesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SourcePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   conversations<T extends Prisma.Workspace$conversationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Workspace$conversationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   artifacts<T extends Prisma.Workspace$artifactsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Workspace$artifactsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ArtifactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  notes<T extends Prisma.Workspace$notesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Workspace$notesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1674,6 +1792,30 @@ export type Workspace$artifactsArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.ArtifactScalarFieldEnum | Prisma.ArtifactScalarFieldEnum[]
+}
+
+/**
+ * Workspace.notes
+ */
+export type Workspace$notesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Note
+   */
+  select?: Prisma.NoteSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Note
+   */
+  omit?: Prisma.NoteOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NoteInclude<ExtArgs> | null
+  where?: Prisma.NoteWhereInput
+  orderBy?: Prisma.NoteOrderByWithRelationInput | Prisma.NoteOrderByWithRelationInput[]
+  cursor?: Prisma.NoteWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NoteScalarFieldEnum | Prisma.NoteScalarFieldEnum[]
 }
 
 /**
