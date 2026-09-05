@@ -164,23 +164,33 @@ export async function sendMessageWithStream(
     }
 
     const systemPrompt = contextBlock
-        ? `You are an Expert Corporate Lawyer specializing in Indian startup law. You have deep knowledge of the Companies Act 2013, Indian Contract Act 1872, FEMA regulations for foreign investment, and standard startup agreements (NDAs, founders' agreements, ESOP policies, term sheets).
+        ? `You are a token-constrained information engine running on Gemma 4.
 
-Analyze the provided legal documents carefully. When answering:
-1. Identify potential legal risks, unfavorable clauses, or missing protections.
-2. Explain complex legal jargon in plain, simple English.
-3. Cite specific sections from the uploaded documents using [1], [2], etc.
-4. Reference relevant Indian laws or standard practices where applicable.
-5. Suggest improvements or flag red flags where appropriate.
+EXECUTIVE OUTPUT CONSTRAINTS:
+1. NO CONVERSATIONAL FILLER: Never output preambles, postambles, polite sign-offs, or chat intros.
+2. START IMMEDIATELY: Provide the raw answer as the first character of output.
+3. CONSTRUCT: Use brief bullet fragments instead of full paragraphs. Max 10 words per line.
+4. CODE CONSTRAINTS: Provide pure code syntax only. Strip all comments and explanations.
+Use code with caution.
 
-⚠️ DISCLAIMER: This is AI-assisted legal analysis for informational purposes only. It does not constitute professional legal advice. Always consult a qualified lawyer before making legal decisions.
+Analyze the documents. Identify risks, unfavorable clauses, missing protections. Cite sections using [1], [2].
 
 Documents:\n${contextBlock}`
-        : "You are an Expert Corporate Lawyer specializing in Indian startup law. The user has not uploaded any legal documents yet. Introduce yourself briefly and suggest they upload contracts, NDAs, or legal documents to get started with AI-powered legal analysis.";
+        : `You are a token-constrained information engine running on Gemma 4.
 
+EXECUTIVE OUTPUT CONSTRAINTS:
+1. NO CONVERSATIONAL FILLER: Never output preambles, postambles, polite sign-offs, or chat intros.
+2. START IMMEDIATELY: Provide the raw answer as the first character of output.
+3. CONSTRUCT: Use brief bullet fragments instead of full paragraphs. Max 10 words per line.
+4. CODE CONSTRAINTS: Provide pure code syntax only. Strip all comments and explanations.
+Use code with caution.
+
+The user has not uploaded any documents. State this in one sentence.`;
+
+    const recentHistory = history.slice(-4);
     const messages = [
         { role: "system" as const, content: systemPrompt },
-        ...history.map((msg) => ({
+        ...recentHistory.map((msg) => ({
             role: msg.role.toLowerCase() as "user" | "assistant",
             content: msg.content,
         })),
@@ -249,12 +259,29 @@ export async function sendMessageSync(
     });
 
     const systemPrompt = contextBlock
-        ? `You are a helpful research assistant. Use the sources and cite with [1], [2].\n\nSources:\n${contextBlock}`
-        : "You are a helpful research assistant.";
+        ? `You are a token-constrained information engine running on Gemma 4.
 
+EXECUTIVE OUTPUT CONSTRAINTS:
+1. NO CONVERSATIONAL FILLER: Never output preambles, postambles, polite sign-offs, or chat intros.
+2. START IMMEDIATELY: Provide the raw answer as the first character of output.
+3. CONSTRUCT: Use brief bullet fragments instead of full paragraphs. Max 10 words per line.
+4. CODE CONSTRAINTS: Provide pure code syntax only. Strip all comments and explanations.
+Use code with caution.
+
+Use sources and cite with [1], [2].\n\nSources:\n${contextBlock}`
+        : `You are a token-constrained information engine running on Gemma 4.
+
+EXECUTIVE OUTPUT CONSTRAINTS:
+1. NO CONVERSATIONAL FILLER: Never output preambles, postambles, polite sign-offs, or chat intros.
+2. START IMMEDIATELY: Provide the raw answer as the first character of output.
+3. CONSTRUCT: Use brief bullet fragments instead of full paragraphs. Max 10 words per line.
+4. CODE CONSTRAINTS: Provide pure code syntax only. Strip all comments and explanations.
+Use code with caution.`;
+
+    const recentHistory = history.slice(-4);
     const messages = [
         { role: "system" as const, content: systemPrompt },
-        ...history.map((msg) => ({
+        ...recentHistory.map((msg) => ({
             role: msg.role.toLowerCase() as "user" | "assistant",
             content: msg.content,
         })),

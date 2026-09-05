@@ -29,17 +29,42 @@ export type ChatMessage = {
     content: string;
 };
 
+function getCandidateModels(primaryModel: string): string[] {
+    const list = [
+        primaryModel,
+        process.env.OPENROUTER_CHAT_MODEL ?? "google/gemma-4-31b-it:free",
+        "google/gemma-4-31b-it:free",
+        "google/gemma-4-26b-a4b-it:free",
+        "nvidia/nemotron-3.5-lightning:free",
+    ];
+    return Array.from(new Set(list));
+}
+
 export async function chatComplete(
     messages: ChatMessage[],
     model = DEFAULT_CHAT_MODEL,
 ) {
     const client = getClient();
-    const response = await client.chat.completions.create({
-        model,
-        messages,
-    });
+    const candidateModels = getCandidateModels(model);
+    let lastError: any = null;
 
-    return response.choices[0]?.message?.content ?? "";
+    for (const candidate of candidateModels) {
+        try {
+            const response = await client.chat.completions.create({
+                model: candidate,
+                messages,
+                max_tokens: 1000,
+                temperature: 0.1,
+                stop: ["\n\n\n"],
+            });
+            return response.choices[0]?.message?.content ?? "";
+        } catch (error: any) {
+            lastError = error;
+            console.warn(`Model ${candidate} failed (${error?.status || error?.message}), trying fallback...`);
+        }
+    }
+
+    throw lastError ?? new Error("All chat models failed");
 }
 
 async function sleep(ms: number) {
@@ -49,16 +74,20 @@ async function sleep(ms: number) {
 export async function* chatStream(
     messages: ChatMessage[],
     model = DEFAULT_CHAT_MODEL,
-    maxRetries = 3,
 ) {
     const client = getClient();
+    const candidateModels = getCandidateModels(model);
+    let lastError: any = null;
 
-    for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    for (const candidate of candidateModels) {
         try {
             const stream = await client.chat.completions.create({
-                model,
+                model: candidate,
                 messages,
                 stream: true,
+                max_tokens: 1000,
+                temperature: 0.1,
+                stop: ["\n\n\n"],
             });
 
             for await (const chunk of stream) {
@@ -67,18 +96,14 @@ export async function* chatStream(
                     yield text;
                 }
             }
-            return; // success, exit
+            return; // success, exit generator
         } catch (error: any) {
-            const isRateLimit = error?.status === 429;
-            if (isRateLimit && attempt < maxRetries) {
-                const delay = Math.pow(2, attempt) * 1000 + Math.random() * 500;
-                console.log(`Rate limited (attempt ${attempt + 1}/${maxRetries}), retrying in ${Math.round(delay)}ms...`);
-                await sleep(delay);
-                continue;
-            }
-            throw error;
+            lastError = error;
+            console.warn(`Streaming with ${candidate} failed (${error?.status || error?.message}), trying fallback...`);
         }
     }
+
+    throw lastError ?? new Error("All chat streaming models failed");
 }
 
 export async function embedTexts(
